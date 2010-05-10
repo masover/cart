@@ -4,7 +4,10 @@
       %a.name{:href=>"/items/#{item.id}"}= h item.name
     .description= h item.description
     .small
-      %a{:href=>"/items/#{item.id}/edit"} Click here to edit
+      %a{:href=>"/items/#{item.id}/edit"} edit
+      %form{:method=>'post', :action=>"/items/#{item.id}"}
+        %input{:type=>'hidden', :name=>'_method', :value=>'DELETE'}
+        %input{:type=>'submit', :value=>'Delete'}
 
 %p
-  %a{:href=>"/items/new"} Create a new item
+  %a{:href=>"/items/new"} new item

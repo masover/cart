@@ -3,8 +3,6 @@ disable_system_gems
 disable_rubygems
 bundle_path ".gems/bundler_gems"
 
-#source 'http://rc-gems.appspot.com'
-
 # List gems to bundle here:
 gem "appengine-rack"
 
