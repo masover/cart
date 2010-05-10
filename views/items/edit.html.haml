@@ -1,0 +1,14 @@
+%h1 Edit item
+%form{:method=>'post', :action=>"/items/#{@item.id}"}
+  %input{:type=>'hidden', :name=>'_method', :value=>'put'}
+  %p
+    %label{:for=>'name'} Name:
+    %input#name{:name=>'item[name]', :value=>@item.name}
+  %p
+    %label{:for=>'desc'} Description:
+    %textarea#desc{:name=>'item[description]'}
+      =h @item.description
+  %p
+    %input{:type=>'submit'}
+%p
+  %a{:href=>'/items'} Back to items.
