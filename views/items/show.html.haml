@@ -3,7 +3,7 @@
   .description= h @item.description
   .small
     %a{:href=>"/items/#{@item.id}/edit"} edit
-    %form{:method=>'post', :action=>"/items/#{item.id}"}
+    %form{:method=>'post', :action=>"/items/#{@item.id}"}
       %input{:type=>'hidden', :name=>'_method', :value=>'DELETE'}
       %input{:type=>'submit', :value=>'Delete'}
 
