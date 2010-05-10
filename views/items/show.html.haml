@@ -1,0 +1,8 @@
+.item
+  %h2.name= h @item.name
+  .description= h @item.description
+  .small
+    %a{:href=>"/items/#{@item.id}/edit"} Click here to edit
+
+%p
+  %a{:href=>"/items/new"} Create a new item

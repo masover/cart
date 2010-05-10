@@ -1,0 +1,12 @@
+%h1 New item
+%form{:method=>'post', :action=>'/items'}
+  %p
+    %label{:for=>'name'} Name:
+    %input#name{:name=>'item[name]'}
+  %p
+    %label{:for=>'desc'} Description:
+    %textarea#desc{:name=>'item[description]'}
+  %p
+    %input{:type=>'submit'}
+%p
+  %a{:href=>'/items'} Back to items.

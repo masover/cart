@@ -1,0 +1,10 @@
+- @items.each do |item|
+  .item
+    %h2
+      %a.name{:href=>"/items/#{item.id}"}= h item.name
+    .description= h item.description
+    .small
+      %a{:href=>"/items/#{item.id}/edit"} Click here to edit
+
+%p
+  %a{:href=>"/items/new"} Create a new item
