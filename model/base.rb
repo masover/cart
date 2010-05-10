@@ -9,7 +9,7 @@ module Base
   module ClassMethods
     def from_param param
       id = if param.kind_of? String
-        com.google.appengine.api.datastore.KeyFactory.stringToKey param
+        AppEngine::Datastore::Key.new param
       else
         param
       end
