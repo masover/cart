@@ -9,4 +9,13 @@ class Item
     "[#{[name, description, stock].join ','}]"
   end
   alias to_param id
+  
+  def self.from_param param
+    id = if param.kind_of? String
+      com.google.appengine.api.datastore.KeyFactory.stringToKey param
+    else
+      param
+    end
+    get id
+  end
 end

@@ -14,12 +14,8 @@ class Cart < Sinatra::Base
   
   mount Item do
     finder {|model, params| model.all}
-    record do |model, params|
-      id = params[:id]
-      if id.kind_of? String
-        id = com.google.appengine.api.datastore.KeyFactory.stringToKey id
-      end
-      model.get id
-    end
+    record {|model, params| model.from_param params[:id]}
   end
+  
+  
 end
