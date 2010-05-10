@@ -2,7 +2,7 @@ require 'sinatras-hat'
 
 require 'model'
 
-class Cart < Sinatra::Base
+class CartDemo < Sinatra::Base
   get '/' do
    'Hello, world!'
   end

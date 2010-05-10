@@ -5,4 +5,4 @@ AppEngine::Rack.configure_app(
     :version => "1")
 
 require 'app'
-run Cart
+run CartDemo
