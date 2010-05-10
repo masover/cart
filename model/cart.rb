@@ -19,4 +19,33 @@ class Cart
       end
     end
   end
+  
+  def checkout!
+    transaction do
+      reload
+      if self.state == 'checkout' || self.state == 'browse'
+        self.state = 'checkout'
+        save
+      end
+    end
+    if self.state == 'checkout'
+      cart_items.each do |cart_item|
+        cart_item.item.update_transaction! self, cart_item.count
+      end
+      
+      transaction do
+        reload
+        if self.state == 'checkout'
+          self.state = 'complete'
+          save
+        end
+      end
+      
+      if self.state == 'complete'
+        cart_items.each do |cart_item|
+          cart_item.item.update_transaction! self, cart_item.count
+        end
+      end
+    end
+  end
 end
