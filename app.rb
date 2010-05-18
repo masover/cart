@@ -4,7 +4,7 @@ require 'model'
 
 class CartDemo < Sinatra::Base
   get '/' do
-   'Hello, world!'
+    'Hello, world!'
   end
   
   helpers do
@@ -17,5 +17,8 @@ class CartDemo < Sinatra::Base
     record {|model, params| model.from_param params[:id]}
   end
   
+  get '/finalize_checkouts' do
+    Cart.all(:state => 'checkout').each(&:checkout!)
+  end
   
 end

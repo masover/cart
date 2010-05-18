@@ -1,0 +1,4 @@
+cron:
+- description: finalize checkouts
+  url: /finalize_checkouts
+  schedule: every 5 minutes
