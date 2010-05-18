@@ -8,10 +8,10 @@ class Item
   has_descendants :item_transactions
   
   def update_transaction! cart, count
-    debit = count
     state = cart.state
     
     transaction do
+      debit = count
       item_transaction = item_transactions.first :cart_id => cart.id
       if item_transaction.nil?
         unless count == 0
