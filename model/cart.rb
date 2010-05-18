@@ -21,11 +21,13 @@ class Cart
   end
   
   def checkout!
-    transaction do
-      reload
-      if self.state == 'checkout' || self.state == 'browse'
-        self.state = 'checkout'
-        save
+    if self.state == 'browse'
+      transaction do
+        reload
+        if self.state == 'browse'
+          self.state = 'checkout'
+          save
+        end
       end
     end
     if self.state == 'checkout'
