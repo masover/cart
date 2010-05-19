@@ -1,3 +1,6 @@
+require 'dm-core'
+DataMapper.setup(:default, "appengine://auto")
+
 module Base
   def self.included klass
     klass.class_eval do 
