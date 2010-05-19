@@ -18,7 +18,9 @@ class CartDemo < Sinatra::Base
   end
   
   get '/finalize_checkouts' do
-    Cart.all(:state => 'checkout').each(&:checkout!)
+    # Consider them stale after one minute. They should only be in this state if the
+    # request previously handled them has already died.
+    Cart.all(:state => 'checkout', :updated_at.lt => (Time.now - 60)).each(&:checkout!)
   end
   
 end

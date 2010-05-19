@@ -1,7 +1,11 @@
+require 'dm-timestamps'
+
 class Cart
   include Base
   
   property :state, String, :default => 'browse'
+  property :updated_at, DateTime
+  
   has_descendants :cart_items
   
   def set_item! item, count
