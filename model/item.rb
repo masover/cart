@@ -14,7 +14,9 @@ class Item
       debit = count
       item_transaction = item_transactions.first :cart_id => cart.id
       if item_transaction.nil?
-        unless count == 0
+        if count == 0 || state == 'complete'
+          debit = 0 # If it's complete, assume we've already debited.
+        else
           ItemTransaction.create :id => {:parent => id}, :cart => cart, :count => count
         end
       else
