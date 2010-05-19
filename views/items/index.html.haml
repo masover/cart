@@ -5,14 +5,6 @@
     .description= h item.description
     .small
       %a{:href=>"/items/#{item.id}/edit"} edit
-      %form{:method => 'post', :action => "/cart/#{item.id}"}
-        %input{:type => 'hidden', :name => '_method', :value => 'PUT'}
-        -if (cart_item = @cart.cart_items.first :item_id => item.id).nil?
-          %input{:type => 'submit', :value => 'Add to cart'}
-        -else
-          %label{:for => "count_#{item.id}"} count: 
-          %input{:id => "count_#{item.id}", :name => 'count', :value => cart_item.count}
-          %input{:type => 'submit', :value => 'Update'}
       %form{:method=>'post', :action=>"/items/#{item.id}"}
         %input{:type=>'hidden', :name=>'_method', :value=>'DELETE'}
         %input{:type=>'submit', :value=>'Delete'}
