@@ -8,6 +8,13 @@ class Cart
   
   has_descendants :cart_items
   
+  def add_item! item
+    # Not transactional. We assume a single user won't race themself.
+    cart_item = cart_items.first :item_id => item.id
+    # Add a single item to the cart if it wasn't there already.
+    set_item! item, 1 if cart_item.nil?
+  end
+  
   def set_item! item, count
     item.update_transaction! self, count
     transaction do
@@ -21,6 +28,10 @@ class Cart
           cart_item.update :count => count
         end
       end
+      # Hack to force an update
+      reload
+      self.updated_at = nil
+      save
     end
   end
   

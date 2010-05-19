@@ -7,6 +7,9 @@
     %label{:for=>'desc'} Description:
     %textarea#desc{:name=>'item[description]'}
   %p
+    %label{:for=>'stock'} Number in stock:
+    %input#stock{:name=>'item[stock]', :value=>@item.stock}
+  %p
     %input{:type=>'submit'}
 %p
   %a{:href=>'/items'} Back to items.

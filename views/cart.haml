@@ -1,0 +1,22 @@
+%h1 Cart
+%ul
+  -@cart.cart_items.each do |cart_item|
+    %li
+      -item = cart_item.item
+      %h2=h item.name
+      %form{:method => 'post', :action => "/cart/#{item.id}"}
+        %input{:type => 'hidden', :name => '_method', :value => 'PUT'}
+        %label{:for => "count_#{item.id}"} count: 
+        %input{:id => "count_#{item.id}", :name => 'count', :value => cart_item.count}
+        %input{:type => 'submit', :value => 'Update'}
+
+%form{:method => 'post', :action => '/cart'}
+  %input{:type => 'hidden', :name => '_method', :value => 'DELETE'}
+  %input{:type => 'submit', :value => 'Empty Cart'}
+
+%form{:method => 'post', :action => '/cart'}
+  %input{:type => 'hidden', :name => '_method', :value => 'PUT'}
+  %input{:type => 'hidden', :name => 'state', :value => 'checkout'}
+  %input{:type => 'submit', :value => 'Checkout'}
+
+=h @cart.id.id
