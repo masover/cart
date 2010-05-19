@@ -1,4 +1,4 @@
 cron:
 - description: finalize checkouts
   url: /finalize_checkouts
-  schedule: every 5 minutes
+  schedule: every 2 minutes
