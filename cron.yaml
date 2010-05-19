@@ -2,3 +2,6 @@ cron:
 - description: finalize checkouts
   url: /finalize_checkouts
   schedule: every 2 minutes
+- description: cleanup carts
+  url: /cleanup_carts
+  schedule: every 3 hours

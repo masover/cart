@@ -23,11 +23,13 @@ class CartDemo < Sinatra::Base
     # Consider them stale after one minute. They should only be in this state if the
     # request previously handled them has already died.
     Cart.all(:state => 'checkout', :updated_at.lt => (Time.now - 60)).each(&:checkout!)
+    ''
   end
   
   get '/cleanup_carts' do
     # Carts left unattended for over an hour will be destroyed.
     Cart.all(:state => 'browse', :updated_at.lt => (Time.now - 3600)).each(&:destroy)
+    ''
   end
   
   get '/cart' do
