@@ -80,7 +80,7 @@ class CartDemo < Sinatra::Base
   
   # Hack. This is only needed for item index.
   before do
-    cart!
+    cart! unless env['HTTP_X_APPENGINE_CRON'] == 'true'
   end
   
 end
