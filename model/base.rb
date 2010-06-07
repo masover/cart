@@ -1,5 +1,8 @@
 require 'dm-core'
 DataMapper.setup(:default, "appengine://auto")
+AppEngine.module_eval do
+  autoload :Labs, 'appengine-apis/labs/taskqueue'
+end
 
 module Base
   def self.included klass

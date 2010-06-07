@@ -32,6 +32,29 @@ class CartDemo < Sinatra::Base
     ''
   end
   
+  delete '/carts/:id/transactions' do |id|
+    key = AppEngine::Datastore::Key.new id
+    if Cart.get(key).nil?
+      t = ItemTransaction.first :cart_id => key
+      return if t.nil?
+      found = false
+      t.transaction do
+        t.reload
+        unless t.nil?
+          parent = t.parent
+          parent.stock += t.count
+          parent.save
+          t.destroy
+          found = true
+        end
+      end
+      if found
+        # re-enqueue
+        Cart.rollback_transactions_for id
+      end
+    end
+  end
+  
   get '/cart' do
     haml :cart
   end

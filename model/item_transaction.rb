@@ -1,3 +1,4 @@
+require 'dm-core'
 require 'dm-timestamps'
 
 class ItemTransaction

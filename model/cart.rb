@@ -1,3 +1,4 @@
+require 'dm-core'
 require 'dm-timestamps'
 
 class Cart
@@ -7,6 +8,14 @@ class Cart
   property :updated_at, DateTime
   
   has_descendants :cart_items
+  
+  before :destroy do
+    self.class.rollback_transactions_for self.id
+  end
+  
+  def self.rollback_transactions_for cart_id
+    AppEngine::Labs::TaskQueue.add nil, :method => 'DELETE', :url => "/carts/#{cart_id}/transactions"
+  end
   
   def add_item! item
     # Not transactional. We assume a single user won't race themself.
