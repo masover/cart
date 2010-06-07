@@ -55,6 +55,19 @@ class CartDemo < Sinatra::Base
     end
   end
   
+  get '/cleanup_transactions' do
+    ItemTransaction.all(:order => [ :updated_at.asc ]).each do |transaction|
+      if transaction.cart.nil?
+        Cart.rollback_transactions_for transaction.cart_id
+      elsif transaction.cart.state == 'complete'
+        cart_item = transaction.cart.cart_items.first(:item_id => item.id)
+        count = cart_item.nil? ? 0 : cart_item.count
+        transaction.parent.update_transaction! transaction.cart, count
+      end
+    end
+    ''
+  end
+  
   get '/cart' do
     haml :cart
   end

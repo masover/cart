@@ -5,3 +5,6 @@ cron:
 - description: cleanup carts
   url: /cleanup_carts
   schedule: every 3 hours
+- description: cleanup transactions
+  url: /cleanup_transactions
+  schedule: every 3 hours
