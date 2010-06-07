@@ -18,6 +18,10 @@ class Cart
   def set_item! item, count
     item.update_transaction! self, count
     transaction do
+      reload
+      if state != 'browse'
+        raise "Can't change values once checking out!"
+      end
       cart_item = cart_items.first :item_id => item.id
       if count == 0
         cart_item.destroy unless cart_item.nil?
@@ -29,7 +33,6 @@ class Cart
         end
       end
       # Hack to force an update
-      reload
       self.updated_at = nil
       save
     end
