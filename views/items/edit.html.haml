@@ -1,6 +1,7 @@
 %h1 Edit item
 %form{:method=>'post', :action=>"/items/#{@item.id}"}
   %input{:type=>'hidden', :name=>'_method', :value=>'put'}
+  %input{:type=>'hidden', :name=>'item[update_key]', :value=>@item.get_update_key.id}
   %p
     %label{:for=>'name'} Name:
     %input#name{:name=>'item[name]', :value=>@item.name}
@@ -9,8 +10,10 @@
     %textarea#desc{:name=>'item[description]'}
       =h @item.description
   %p
-    %label{:for=>'stock'} Number in stock:
-    %input#stock{:name=>'item[stock]', :value=>@item.stock}
+    Number in stock:
+    =@item.stock
+    +
+    %input#delta{:name=>'item[delta]', :value=>0}
   %p
     %input{:type=>'submit'}
 %p

@@ -1,6 +1,9 @@
 .item
   %h2.name= h @item.name
   .description= h @item.description
+  .stock
+    Stock:
+    =@item.stock
   .small
     %a{:href=>"/items/#{@item.id}/edit"} edit
     %form{:method=>'post', :action=>"/items/#{@item.id}"}

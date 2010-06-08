@@ -6,6 +6,42 @@ class Item
   property :stock, Integer, :default => 0
   
   has_descendants :item_transactions
+  has_descendants :item_update_keys
+  
+  attr_accessor :delta
+  attr_reader :update_key
+  
+  def update_key= value
+    @update_key = AppEngine::Datastore::Key.new value
+  end
+  
+  def get_update_key
+    ItemUpdateKey.create :id => {:parent => self.id}
+  end
+  
+  def save
+    if delta.nil? || delta == 0
+      super || (return false)
+    else
+      attrs = dirty_attributes
+      transaction do
+        key = item_update_keys.first(:id => update_key)
+        raise AppEngine::Datastore::Rollback if key.nil?
+        key.destroy
+        reload
+        old_stock = self.stock
+        self.attributes = attrs
+        self.stock = old_stock + delta.to_i
+        super || (return false)
+      end
+      if dirty?
+        super || (return false)
+      end
+      @update_key = nil
+      @delta = nil
+    end
+    true
+  end
   
   def update_transaction! cart, count
     state = cart.state
