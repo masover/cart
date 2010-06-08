@@ -6,7 +6,7 @@ class CartDemo < Sinatra::Base
   enable :sessions
   
   get '/' do
-    'Hello, world!'
+    haml :index
   end
   
   helpers do
