@@ -32,6 +32,12 @@ class CartDemo < Sinatra::Base
     ''
   end
   
+  get '/cleanup_update_keys' do
+    # update_keys are only valid for 24 hours
+    UpdateKey.all(:created_at.lt => (Time.now - 86400)).each(&:destroy)
+    ''
+  end
+  
   delete '/carts/:id/transactions' do |id|
     key = AppEngine::Datastore::Key.new id
     if Cart.get(key).nil?
