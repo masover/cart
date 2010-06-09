@@ -6,7 +6,7 @@ class Item
   property :stock, Integer, :default => 0
   
   has_descendants :item_transactions
-  has_descendants :item_update_keys
+  has_descendants :update_keys
   
   attr_accessor :delta
   attr_reader :update_key
@@ -16,7 +16,7 @@ class Item
   end
   
   def get_update_key
-    ItemUpdateKey.create :id => {:parent => self.id}
+    UpdateKey.create :id => {:parent => self.id}
   end
   
   def save
@@ -25,7 +25,7 @@ class Item
     else
       attrs = dirty_attributes
       transaction do
-        key = item_update_keys.first(:id => update_key)
+        key = update_keys.first(:id => update_key)
         raise AppEngine::Datastore::Rollback if key.nil?
         key.destroy
         reload
